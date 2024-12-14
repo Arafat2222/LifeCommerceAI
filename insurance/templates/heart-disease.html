@@ -1,0 +1,309 @@
+{% extends 'base.html' %}
+{% block title %} Prediction {% endblock %}
+
+{% block body %}
+
+<section class="text-gray-600 body-font -my-9">
+  <div class="container px-5 py-24 mx-auto">
+    <!-- Section Heading -->
+    <div class="flex flex-col text-center w-full mb-12">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Heart Disease Prediction</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Explore the future of your insurance premiums with just a few simple details.</p>
+      <br><b>
+        <!-- {% if output_data > 0 %}
+          <h2>Heart Disease: <span class="text-red-500 font-bold">Positive</span></h2>
+        {% else %}
+          <h2>Heart Disease: <span class="text-green-500 font-bold">Negative</span></h2>
+        {% endif %} -->
+      </b>
+    </div>
+    <h2></h2>
+
+
+
+<form action="{% url 'heart-disease_pred' %}" method="POST" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg"onsubmit="return validateForm()">
+    {% csrf_token %}
+    
+    <!-- Name -->
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700">Name</label>
+      <input type="text" id="name" name="name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+
+    <!-- Age -->
+    <div class="mb-4">
+      <label for="age" class="block text-gray-700">Age</label>
+      <input type="number" id="age" name="age" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+    
+    <!-- Sex -->
+    <div class="mb-4">
+      <label for="sex" class="block text-gray-700">Sex</label>
+      <div id="sex" class="flex items-center space-x-4">
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="sex"
+            value="1"
+            class="mr-2 focus:ring-blue-500"
+            required
+          />
+          Male
+        </label>
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="sex"
+            value="0"
+            class="mr-2 focus:ring-blue-500"
+          />
+          Female
+        </label>
+      </div>
+    </div>
+
+    
+    <!-- Chest Pain Type -->
+    <div class="mb-4">
+      <label for="cp" class="block text-gray-700">Chest Pain Type</label>
+      <select id="cp" name="cp" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="">Select</option>
+        <option value="0">Type 0</option>
+        <option value="1">Type 1</option>
+        <option value="2">Type 2</option>
+        <option value="3">Type 3</option>
+      </select>
+    </div>
+  
+    <!-- Resting Blood Pressure -->
+    <div class="mb-4">
+      <label for="trestbps" class="block text-gray-700">Resting Blood Pressure (mm Hg)</label>
+      <input type="number" id="trestbps" name="trestbps"  class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+    
+    <!-- Cholesterol Level -->
+    <div class="mb-4">
+      <label for="chol" class="block text-gray-700">Cholesterol Level (mg/dl)</label>
+      <input type="number" id="chol" name="chol" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+    
+    <!-- Fasting Blood Sugar -->
+    <div class="mb-4">
+      <label for="fbs" class="block text-gray-700">Fasting Blood Sugar > 120 mg/dl</label>
+      <select id="fbs" name="fbs" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="">Select</option>
+        <option value="1">True</option>
+        <option value="0">False</option>
+      </select>
+    </div>
+  
+    <!-- Resting ECG -->
+    <div class="mb-4">
+      <label for="restecg" class="block text-gray-700">Resting Electrocardiographic Results</label>
+      <select id="restecg" name="restecg" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="">Select</option>
+        <option value="0">Result 0</option>
+        <option value="1">Result 1</option>
+        <option value="2">Result 2</option>
+      </select>
+    </div>
+  
+    <!-- Maximum Heart Rate Achieved -->
+    <div class="mb-4">
+      <label for="thalach" class="block text-gray-700">Maximum Heart Rate Achieved</label>
+      <input type="number" id="thalach" name="thalach" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+    
+    <!-- Exercise-induced Angina -->
+    <div class="mb-4">
+      <label for="exang" class="block text-gray-700">Exercise-induced Angina</label>
+      <select id="exang" name="exang" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="">Select</option>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+    
+    <!-- ST Depression -->
+    <div class="mb-4">
+      <label for="oldpeak" class="block text-gray-700">ST Depression (Oldpeak)</label>
+      <input type="number" step="0.1" id="oldpeak" name="oldpeak" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+  
+    <!-- Slope of the Peak Exercise ST Segment -->
+    <div class="mb-4">
+      <label for="slope" class="block text-gray-700">Slope of the Peak Exercise ST Segment</label>
+      <select id="slope" name="slope" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="">Select</option>
+        <option value="0">Slope 0</option>
+        <option value="1">Slope 1</option>
+        <option value="2">Slope 2</option>
+      </select>
+    </div>
+  
+    <!-- Number of Major Vessels -->
+    <div class="mb-4">
+      <label for="ca" class="block text-gray-700">Number of Major Vessels (0-3)</label>
+      <input type="number" id="ca" name="ca" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+  
+    <!-- Thalassemia -->
+    <div class="mb-4">
+      <label for="thal" class="block text-gray-700">Thalassemia</label>
+      <select id="thal" name="thal" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="">Select</option>
+        <option value="1">Normal</option>
+        <option value="2">Fixed Defect</option>
+        <option value="3">Reversible Defect</option>
+      </select>
+    </div>
+  <!-- Submit and Reset Buttons -->
+      <div class="flex justify-between">
+        <button type="button" onclick="clearForm()" class="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
+          Reset
+        </button>
+        <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          Submit
+        </button>
+      </div>
+
+      <script>
+        function clearForm() {
+          // Clear all input fields
+          document.getElementById('name').value = '';
+          document.getElementById('age').value = '';
+          document.getElementById('sex').value = '';
+          document.getElementById('cp').value = '';
+          document.getElementById('trestbps').value = '';
+          document.getElementById('chol').value = '';
+          document.getElementById('fbs').value = '';
+          document.getElementById('restecg').value = '';
+          document.getElementById('thalach').value = '';
+          document.getElementById('exang').value = '';
+          document.getElementById('oldpeak').value = '';
+          document.getElementById('slope').value = '';
+          document.getElementById('ca').value = '';
+          document.getElementById('thal').value = '';
+
+          // Clear prediction result
+          document.getElementById('predictionResult').style.display = 'none'; // Hide prediction result
+          
+          // Clear any error borders or custom validation styles
+          const fields = document.querySelectorAll('input, select');
+          fields.forEach(field => {
+            field.classList.remove('border-red-500');
+          });
+        }
+      </script>
+      
+      <script>
+        function validateForm() {
+          const fields = document.querySelectorAll('input, select');
+          let allFilled = true;
+
+          // Clear previous error indications
+          fields.forEach(field => {
+            field.classList.remove('border-red-500'); 
+          });
+          // Name field validation
+            const name = document.getElementById('name').value;
+            if (name.trim() === "") {
+                alert('Name must be filled.');
+                allFilled = false;
+                document.getElementById('name').classList.add('border-red-500');
+            }
+
+          // Age field validation
+          const age = document.getElementById('age').value;
+          if (age === "" || age === "Select") {
+            alert('Age must be filled.');
+            allFilled = false;
+            document.getElementById('age').classList.add('border-red-500');
+          } else if (!Number.isInteger(+age) || +age <= 0) {
+            alert('Age must be a positive integer greater than 0.');
+            allFilled = false;
+            document.getElementById('age').classList.add('border-red-500');
+          }
+
+          // Resting Blood Pressure validation
+          const trestbps = document.getElementById('trestbps').value;
+          if (trestbps === "" || trestbps === "Select") {
+            alert('Resting Blood Pressure must be filled.');
+            allFilled = false;
+            document.getElementById('trestbps').classList.add('border-red-500');
+          } else if (+trestbps <= 0) {
+            alert('Resting Blood Pressure must be a positive number.');
+            allFilled = false;
+            document.getElementById('trestbps').classList.add('border-red-500');
+          }
+
+          // Cholesterol Level validation
+          const chol = document.getElementById('chol').value;
+          if (chol === "" || chol === "Select") {
+            alert('Cholesterol Level must be filled.');
+            allFilled = false;
+            document.getElementById('chol').classList.add('border-red-500');
+          } else if (+chol <= 0) {
+            alert('Cholesterol Level must be a positive number.');
+            allFilled = false;
+            document.getElementById('chol').classList.add('border-red-500');
+          }
+
+          // Maximum Heart Rate Achieved validation
+          const thalach = document.getElementById('thalach').value;
+          if (thalach === "" || thalach === "Select") {
+            alert('Maximum Heart Rate must be filled.');
+            allFilled = false;
+            document.getElementById('thalach').classList.add('border-red-500');
+          } else if (+thalach <= 0) {
+            alert('Maximum Heart Rate must be a positive number.');
+            allFilled = false;
+            document.getElementById('thalach').classList.add('border-red-500');
+          }
+
+          // ST Depression validation
+          const oldpeak = document.getElementById('oldpeak').value;
+          if (oldpeak === "" || oldpeak === "Select") {
+            alert('ST Depression (Oldpeak) must be filled.');
+            allFilled = false;
+            document.getElementById('oldpeak').classList.add('border-red-500');
+          } else if (+oldpeak < 0) {
+            alert('ST Depression (Oldpeak) must be a non-negative number.');
+            allFilled = false;
+            document.getElementById('oldpeak').classList.add('border-red-500');
+          }
+
+          // Number of Major Vessels validation
+          const ca = document.getElementById('ca').value;
+          if (ca === "" || ca === "Select") {
+            alert('Number of Major Vessels must be filled.');
+            allFilled = false;
+            document.getElementById('ca').classList.add('border-red-500');
+          } else if (!Number.isInteger(+ca) || +ca < 0 || +ca > 3) {
+            alert('Number of Major Vessels must be an integer between 0 and 3.');
+            allFilled = false;
+            document.getElementById('ca').classList.add('border-red-500');
+          }
+
+          // Dropdown fields validation
+          const dropdowns = ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'thal'];
+          dropdowns.forEach(dropdown => {
+            const element = document.getElementById(dropdown);
+            if (element.value === "") {
+              alert(`${element.previousElementSibling.innerText} must be selected.`);
+              allFilled = false;
+              element.classList.add('border-red-500');
+            }
+          });
+
+          return allFilled; // Prevent form submission if validation fails
+        }
+      </script>
+
+    </form>
+    </div>
+    </section>
+
+  
+
+  {% endblock body %}  

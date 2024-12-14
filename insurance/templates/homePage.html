@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Include the Font Awesome library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    @media (max-width: 576px) {
+      .nav-link {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      .header-buttons {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-300">
+  <header class="p-3 bg-dark text-white">
+    <div class="container-fluid">
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+        
+        <!-- Brand/Logo -->
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+          <span class="font-weight-bold text-purple-700">LifeCommerceAI</span>
+        </a>
+
+        <!-- Navbar Links -->
+        <ul class="nav col-12 col-lg-auto mb-2 justify-content-center mb-lg-0">
+          
+          
+
+        <!-- Action Buttons -->
+    <div class="text-end header-buttons">
+      <a href="{%url 'login' %}" class="btn btn-outline-light me-2">Login</a>
+      <a href="{%url 'signup' %}" class="btn btn-warning">Sign-up</a>
+    </div>
+      </div>
+    </div>
+  </header>
+  <section class="text-gray-600 body-font">
+    <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+        <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+                LifeCommerceAI
+                <br class="hidden lg:inline-block">
+                <span class="text-success">Premium Prediction</span>
+            </h1>
+  
+            <!-- Container for paragraphs -->
+            <div id="text-container">
+                <p>"LifeCommerceAI leverages the power of artificial intelligence to revolutionize healthcare and commerce.
+                  Our cutting-edge platform detects diseases with high accuracy, providing early insights for better health management.
+                  Additionally, we predict prices in real-time, helping businesses and consumers make informed decisions.
+                  Combining data-driven intelligence with advanced algorithms, LifeCommerceAI is at the forefront of transforming industries.</p>
+            </div>
+  
+            
+        </div>
+        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+            <img class="object-cover object-center rounded" alt="hero" src="https://i.ibb.co.com/g7bBNnn/im4.webp">
+        </div>
+    </div>
+  </section>
+  
+  <section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <h2 class="sm:text-4xl text-4xl font-extrabold title-font text-center text-gray-900 mb-20">Our Vision
+       
+      </h2>
+      
+      <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4 md:space-y-0 space-y-6">
+        <div class="p-4 md:w-1/3 flex">
+          <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+          </div>
+          <div class="flex-grow pl-6">
+            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Healthcare Decision Support</h2>
+            <p class="leading-relaxed text-base">LifeCommerceAI offers AI-driven insights to assist doctors and healthcare providers in making more accurate and timely decisions for patient care.</p>
+            
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="p-4 md:w-1/3 flex">
+          <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+              <circle cx="6" cy="6" r="3"></circle>
+              <circle cx="6" cy="18" r="3"></circle>
+              <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
+            </svg>
+          </div>
+          <div class="flex-grow pl-6">
+            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Real-Time Health Insights</h2>
+            <p class="leading-relaxed text-base"> LifeCommerceAI offers real-time insights into health conditions by analyzing user inputs and medical records, helping individuals and healthcare providers track progress.</p>
+            
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="p-4 md:w-1/3 flex">
+          <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="flex-grow pl-6">
+            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Business Intelligence Enhancement</h2>
+            <p class="leading-relaxed text-base">LifeCommerceAI equips businesses with actionable insights, helping them improve strategy, marketing, and operational efficiency through detailed data analysis.</p>
+            
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="font-sans">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center">
+            <h2 class="text-gray-800 text-4xl font-extrabold">Meet our team</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-8 max-sm:justify-center mt-12 max-sm:max-w-xs mx-auto">
+            <div class="bg-gray-800 p-4 border rounded-lg">
+                <img src="https://i.ibb.co.com/N9hN2R8/afrinDev.png" class="w-full object-contain object-top rounded-lg" />
+
+                <div class="text-center mt-4">
+                    <h4 class="text-base font-semibold text-white">Web Designer</h4>
+                    <p class="text-xs mt-2 text-white">Suriya Islam Afrin</p>
+                    <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-phone-alt"></i> +8801854-705706
+                  </p>
+                  <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-envelope"></i> suriyaafrin.com
+                  </p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 p-4 border rounded-lg">
+                <img src="https://i.ibb.co.com/p24xSVg/arafatE.png" class="w-full object-contain object-top rounded-lg" />
+
+                <div class="text-center mt-4">
+                    <h4 class="text-base font-semibold text-white">Software Engineer</h4>
+                    <p class="text-xs mt-2 text-white">Md. Arafat Kabir</p>
+                    <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-phone-alt"></i> +8801736-270170
+                  </p>
+                  <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-envelope"></i> mdarafatkabir94@gmail.com
+                  </p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 p-4 border rounded-lg">
+                <img src="https://i.ibb.co.com/VTD33PD/ashikVai.png" class="w-full object-contain object-top rounded-lg" />
+
+                <div class="text-center mt-4">
+                    <h4 class="text-base font-semibold text-white">Software Engineer</h4>
+                    <p class="text-xs mt-2 text-white">Ashik Billah Walid</p>
+                    <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-phone-alt"></i> +8801977-959875
+                  </p>
+                  <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-envelope"></i> ashikbillahwalid60@gmail.com
+                  </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <hr>
+  <footer class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
+      <!-- Footer Content -->
+    </div>
+    <div class="bg-gray-100">
+      <div class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
+        <p class="text-gray-500 text-sm text-center sm:text-left">© 2024 LearnSost —
+          <a href="#" rel="noopener noreferrer" class="text-gray-600 ml-1" target="_blank">LearnSoft</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
+</html>
+ 

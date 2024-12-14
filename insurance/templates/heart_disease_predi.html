@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}Heart Disease Prediction Results{% endblock %}
+
+{% block body %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-12">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Heart Disease Prediction Results</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Here are the details you submitted:</p>
+    </div>
+    
+    <div class="max-w-lg mx-auto bg-white shadow-md rounded-lg p-6">
+      <ul class="divide-y divide-gray-200">
+        <li class="py-2 flex justify-between">
+            <span class="text-gray-700">Name:</span>
+            <span>{{ input_data.name }}</span>
+          </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Age:</span>
+          <span>{{ input_data.age }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Sex:</span>
+          <span>{{ input_data.sex|yesno:"Male,Female" }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Chest Pain Type:</span>
+          <span>{{ input_data.cp }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Resting Blood Pressure (mm Hg):</span>
+          <span>{{ input_data.trestbps }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Cholesterol Level (mg/dl):</span>
+          <span>{{ input_data.chol }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Fasting Blood Sugar > 120 mg/dl:</span>
+          <span>{{ input_data.fbs|yesno:"Yes,No" }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Resting ECG Results:</span>
+          <span>{{ input_data.restecg }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Max Heart Rate Achieved:</span>
+          <span>{{ input_data.thalach }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Exercise-induced Angina:</span>
+          <span>{{ input_data.exang|yesno:"Yes,No" }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">ST Depression (Oldpeak):</span>
+          <span>{{ input_data.oldpeak }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Slope of the Peak Exercise ST Segment:</span>
+          <span>{{ input_data.slope }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Number of Major Vessels:</span>
+          <span>{{ input_data.ca }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Thalassemia:</span>
+          <span>{{ input_data.thal }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+            <span class="text-gray-700">Heart Disease:</span>
+            <span class="{% if prediction_result > 0 %}text-red-500 font-bold{% else %}text-green-500 font-bold{% endif %}">
+                {% if prediction_result > 0 %}Positive{% else %}Negative{% endif %}
+            </span>
+        </li>
+      </ul>
+
+      <div class="mt-6 flex justify-end">
+        <button id="downloadPdf" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            Download PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    document.getElementById('downloadPdf').addEventListener('click', function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.setFontSize(22);
+        doc.text('Heart Disease Prediction Results', 14, 22);
+        
+        // Add user details
+        doc.setFontSize(16);
+        doc.text('Name: {{ input_data.name|escapejs }}', 14, 40);
+        doc.text('Age: {{ input_data.age }}', 14, 50);
+        doc.text('Sex: {{ input_data.sex|yesno:"Male,Female"|escapejs }}', 14, 60);
+        doc.text('Chest Pain Type: {{ input_data.cp }}', 14, 70);
+        doc.text('Resting Blood Pressure (mm Hg): {{ input_data.trestbps }}', 14, 80);
+        doc.text('Cholesterol Level (mg/dl): {{ input_data.chol }}', 14, 90);
+        doc.text('Fasting Blood Sugar > 120 mg/dl: {{ input_data.fbs|yesno:"Yes,No"|escapejs }}', 14, 100);
+        doc.text('Resting ECG Results: {{ input_data.restecg }}', 14, 110);
+        doc.text('Max Heart Rate Achieved: {{ input_data.thalach }}', 14, 120);
+        doc.text('Exercise-induced Angina: {{ input_data.exang|yesno:"Yes,No"|escapejs }}', 14, 130);
+        doc.text('ST Depression (Oldpeak): {{ input_data.oldpeak }}', 14, 140);
+        doc.text('Slope of the Peak Exercise ST Segment: {{ input_data.slope }}', 14, 150);
+        doc.text('Number of Major Vessels: {{ input_data.ca }}', 14, 160);
+        doc.text('Thalassemia: {{ input_data.thal }}', 14, 170);
+        doc.text('Heart Disease: ' + ('{{ prediction_result }}' > 0 ? 'Positive' : 'Negative'), 14, 180);
+        // Save the PDF
+        doc.save('heart_disease_prediction_results.pdf');
+    });
+</script>
+
+{% endblock body %}

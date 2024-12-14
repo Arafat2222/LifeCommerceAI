@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+
+{% block body%}
+<style>
+  /* Animation for each word to appear in sequence */
+  .word {
+      display: inline-block;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+      animation-delay: var(--delay);
+  }
+
+  @keyframes fadeIn {
+      0% {
+          opacity: 0;
+      }
+      100% {
+          opacity: 1;
+      }
+  }
+
+  .text-container {
+      display: inline-block;
+      white-space: nowrap;
+  }
+</style>
+
+<section class="text-gray-600 body-font">
+  <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+      <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+          <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+              LifeCommerceAI
+              <br class="hidden lg:inline-block">
+              <span class="text-success">Premium Prediction</span>
+          </h1>
+
+          <!-- Container for paragraphs -->
+          <div id="text-container">
+              <div id="paragraph-1" class="text-container"></div>
+              <div id="paragraph-2" class="text-container"></div>
+              <div id="paragraph-3" class="text-container"></div>
+              <div id="paragraph-4" class="text-container"></div>
+          </div>
+
+          
+      </div>
+      <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+          <img class="object-cover object-center rounded" alt="hero" src="https://i.ibb.co.com/g7bBNnn/im4.webp">
+      </div>
+  </div>
+</section>
+
+<script>
+  // Text content for each paragraph
+  const paragraphs = [
+      "LifeCommerceAI leverages the power of artificial intelligence to revolutionize healthcare and commerce.",
+      "Our cutting-edge platform detects diseases with high accuracy, providing early insights for better health management.",
+      "Additionally, we predict prices in real-time, helping businesses and consumers make informed decisions.",
+      "Combining data-driven intelligence with advanced algorithms, LifeCommerceAI is at the forefront of transforming industries."
+  ];
+
+  // Function to split text into words and animate each one sequentially
+  function createParagraphText(paragraphId, text, callback) {
+      const container = document.getElementById(paragraphId);
+      container.innerHTML = ''; // Clear any existing content
+
+      let delay = 0; // Start with no delay
+
+      // Split text into words and animate each word
+      text.split(' ').forEach((word, index) => {
+          const wordElement = document.createElement('span');
+          wordElement.textContent = word;
+          wordElement.classList.add('word');
+          wordElement.style.setProperty('--delay', `${delay}s`); // Delay for each word
+          container.appendChild(wordElement);
+          container.appendChild(document.createTextNode(' ')); // Add space after the word
+
+          delay += 0.5; // Increment the delay for each word
+      });
+
+      // After the paragraph is completed, call the callback
+      setTimeout(callback, delay * 1000); // Wait for all words to appear
+  }
+
+  // Function to animate each paragraph sequentially
+  function animateText() {
+      let currentIndex = 0;
+
+      // Start with the first paragraph
+      createParagraphText('paragraph-1', paragraphs[0], () => {
+          createParagraphText('paragraph-2', paragraphs[1], () => {
+              createParagraphText('paragraph-3', paragraphs[2], () => {
+                  createParagraphText('paragraph-4', paragraphs[3], () => {
+                      // After all paragraphs are shown, wait for 5 seconds and repeat
+                      setTimeout(() => {
+                          animateText(); // Restart the animation
+                      }, 5000); // 5 seconds after the last paragraph
+                  });
+              });
+          });
+      });
+  }
+
+  // Start the animation
+  animateText();
+</script>
+
+<hr>
+
+
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <h2 class="sm:text-4xl text-4xl font-extrabold title-font text-center text-gray-900 mb-20">Our Vision
+       
+      </h2>
+      <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4 md:space-y-0 space-y-6">
+        <div class="p-4 md:w-1/3 flex">
+          <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+          </div>
+          <div class="flex-grow pl-6">
+            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Healthcare Decision Support</h2>
+            <p class="leading-relaxed text-base">LifeCommerceAI offers AI-driven insights to assist doctors and healthcare providers in making more accurate and timely decisions for patient care.</p>
+            
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="p-4 md:w-1/3 flex">
+          <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+              <circle cx="6" cy="6" r="3"></circle>
+              <circle cx="6" cy="18" r="3"></circle>
+              <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
+            </svg>
+          </div>
+          <div class="flex-grow pl-6">
+            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Real-Time Health Insights</h2>
+            <p class="leading-relaxed text-base"> LifeCommerceAI offers real-time insights into health conditions by analyzing user inputs and medical records, helping individuals and healthcare providers track progress.</p>
+            
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="p-4 md:w-1/3 flex">
+          <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="flex-grow pl-6">
+            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Business Intelligence Enhancement</h2>
+            <p class="leading-relaxed text-base">LifeCommerceAI equips businesses with actionable insights, helping them improve strategy, marketing, and operational efficiency through detailed data analysis.</p>
+            
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+ <div class="font-sans">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center">
+            <h2 class="text-gray-800 text-4xl font-extrabold">Meet our team</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-8 max-sm:justify-center mt-12 max-sm:max-w-xs mx-auto">
+            <div class="bg-gray-800 p-4 border rounded-lg">
+                <img src="https://i.ibb.co.com/N9hN2R8/afrinDev.png" class="w-full object-contain object-top rounded-lg" />
+
+                <div class="text-center mt-4">
+                    <h4 class="text-base font-semibold text-white">Web Designer</h4>
+                    <p class="text-xs mt-2 text-white">Suriya Islam Afrin</p>
+                    <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-phone-alt"></i> +8801854-705706
+                  </p>
+                  <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-envelope"></i> suriyaafrin.com
+                  </p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 p-4 border rounded-lg">
+                <img src="https://i.ibb.co.com/p24xSVg/arafatE.png" class="w-full object-contain object-top rounded-lg" />
+
+                <div class="text-center mt-4">
+                    <h4 class="text-base font-semibold text-white">Software Engineer</h4>
+                    <p class="text-xs mt-2 text-white">Md. Arafat Kabir</p>
+                    <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-phone-alt"></i> +8801736-270170
+                  </p>
+                  <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-envelope"></i> mdarafatkabir94@gmail.com
+                  </p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 p-4 border rounded-lg">
+                <img src="https://i.ibb.co.com/VTD33PD/ashikVai.png" class="w-full object-contain object-top rounded-lg" />
+
+                <div class="text-center mt-4">
+                    <h4 class="text-base font-semibold text-white">Software Engineer</h4>
+                    <p class="text-xs mt-2 text-white">Ashik Billah Walid</p>
+                    <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-phone-alt"></i> +8801977-959875
+                  </p>
+                  <p class="text-xs mt-2 text-white">
+                      <i class="fas fa-envelope"></i> ashikbillahwalid60@gmail.com
+                  </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+
+
+{% endblock body%}

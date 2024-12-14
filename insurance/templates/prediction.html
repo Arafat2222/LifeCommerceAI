@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %} Prediction {% endblock %}
+
+{% block body %}
+
+<section class="text-gray-600 body-font -my-9">
+  <div class="container px-5 py-24 mx-auto">
+    <!-- Section Heading -->
+    <div class="flex flex-col text-center w-full mb-12">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Insurance Premium Prediction</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Explore the future of your insurance premiums with just a few simple details.</p>
+      <br><b>
+        {% if output %}
+          <h2>Insurance: {{output}}</h2>
+        {% endif %}
+      </b>
+    </div>
+    <h2></h2>
+    <!-- Form Section -->
+    <form class="lg:w-1/2 md:w-2/3 mx-auto" method="post" action="{% url 'prediction' %}" onsubmit="return validateForm()">
+      {% csrf_token %}
+      <div class="flex flex-wrap -m-2">
+        <!-- Age Input -->
+        <div class="p-2 w-full sm:w-1/2">
+          <div class="relative">
+            <label for="age" class="leading-7 text-sm text-gray-600">Enter the Age</label>
+            <input type="text" id="age" name="age" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-4 leading-8 transition-colors duration-200 ease-in-out" required>
+          </div>
+        </div>
+
+        <!-- Sex Input -->
+        <div class="p-2 w-full sm:w-1/2">
+          <div class="relative">
+            <label for="sex" class="leading-7 text-sm text-gray-600">Enter the sex (male/female)</label>
+            <select id="sex" name="sex" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-4 leading-8 transition-colors duration-200 ease-in-out" required>
+              <option value="" disabled selected>Select</option>
+              <option value="1">Male</option>
+              <option value="0">Female</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- BMI Input -->
+        <div class="p-2 w-full sm:w-1/2">
+          <div class="relative">
+            <label for="bmi" class="leading-7 text-sm text-gray-600">Enter BMI</label>
+            <input type="text" id="bmi" name="bmi" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-4 leading-8 transition-colors duration-200 ease-in-out" required>
+          </div>
+        </div>
+
+        <!-- Children Input -->
+        <div class="p-2 w-full sm:w-1/2">
+          <div class="relative">
+            <label for="children" class="leading-7 text-sm text-gray-600">Enter the number of children</label>
+            <input type="text" id="children" name="children" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-4 leading-8 transition-colors duration-200 ease-in-out" required>
+          </div>
+        </div>
+
+        <!-- Smoker Input -->
+        <div class="p-2 w-full sm:w-1/2">
+          <div class="relative">
+            <label for="smoker" class="leading-7 text-sm text-gray-600">Are you a smoker?</label>
+            <select id="smoker" name="smoker" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-4 leading-8 transition-colors duration-200 ease-in-out" required>
+              <option value="" disabled selected>Select</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Region Input -->
+        <div class="p-2 w-full sm:w-1/2">
+          <div class="relative">
+            <label for="region" class="leading-7 text-sm text-gray-600">Select Region</label>
+            <select id="region" name="region" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-4 leading-8 transition-colors duration-200 ease-in-out" required>
+              <option value="" disabled selected>Region</option>
+              <option value="1">Southwest</option>
+              <option value="2">Southeast</option>
+              <option value="3">Northwest</option>
+              <option value="4">Northeast</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="p-2 w-full">
+          <button type="submit" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+<script>
+  function validateForm() {
+    const fields = document.querySelectorAll('input, select');
+    let allFilled = true;
+
+    // Clear previous error indications
+    fields.forEach(field => {
+      field.classList.remove('border-red-500'); 
+    });
+
+    // Check specific fields for empty values and integer constraints
+    const age = document.getElementById('age').value;
+    const bmi = document.getElementById('bmi').value;
+    const children = document.getElementById('children').value;
+
+    if (age === "" || age === "Select") {
+      alert('Age must be filled.');
+      allFilled = false;
+      document.getElementById('age').classList.add('border-red-500');
+    } else if (!Number.isInteger(+age) || +age <= 0) {
+      alert('Age must be a positive integer greater than 0.');
+      allFilled = false;
+      document.getElementById('age').classList.add('border-red-500');
+    }
+
+    if (bmi === "" || bmi === "Select") {
+      alert('BMI must be filled.');
+      allFilled = false;
+      document.getElementById('bmi').classList.add('border-red-500');
+    } else if (!Number.isInteger(+bmi) || +bmi <= 0) {
+      alert('BMI must be a positive integer greater than 0.');
+      allFilled = false;
+      document.getElementById('bmi').classList.add('border-red-500');
+    }
+
+    if (children === "" || children === "Select") {
+      alert('Number of children must be filled.');
+      allFilled = false;
+      document.getElementById('children').classList.add('border-red-500');
+    } else if (!Number.isInteger(+children) || +children < 0) {
+      alert('Number of children must be a non-negative integer.');
+      allFilled = false;
+      document.getElementById('children').classList.add('border-red-500');
+    }
+
+    return allFilled; // Prevent form submission if validation fails
+  }
+</script>
+
+{% endblock body %}

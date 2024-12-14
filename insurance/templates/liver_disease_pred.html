@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Liver Disease Prediction Results{% endblock %}
+
+{% block body %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-12">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Liver Disease Prediction Results</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Here are the details you submitted:</p>
+    </div>
+    
+    <div class="max-w-lg mx-auto bg-white shadow-md rounded-lg p-6">
+      <ul class="divide-y divide-gray-200">
+        <li class="py-2 flex justify-between">
+            <span class="text-gray-700">Name:</span>
+            <span>{{ input_data.name }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Age:</span>
+          <span>{{ input_data.age }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Gender:</span>
+          <span>{{ input_data.gender|yesno:"Male,Female" }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">BMI:</span>
+          <span>{{ input_data.bmi }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Alcohol Consumption (units/week):</span>
+          <span>{{ input_data.alcohol }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Smoking:</span>
+          <span>{{ input_data.smoking|yesno:"Yes,No" }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Genetic Risk:</span>
+          <span>{{ input_data.geneticRisk|yesno:"High,Low" }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Physical Activity (hours/week):</span>
+          <span>{{ input_data.physical_activity }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Diabetes:</span>
+          <span>{{ input_data.diabetes|yesno:"Yes,No" }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Hypertension:</span>
+          <span>{{ input_data.hypertension|yesno:"Yes,No" }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+          <span class="text-gray-700">Liver Function Test (score):</span>
+          <span>{{ input_data.liver_function_test }}</span>
+        </li>
+        <li class="py-2 flex justify-between">
+            <span class="text-gray-700">Liver Disease:</span>
+            <span class="{% if prediction_result > 0 %}text-red-500 font-bold{% else %}text-green-500 font-bold{% endif %}">
+                {% if prediction_result > 0 %}Positive{% else %}Negative{% endif %}
+            </span>
+        </li>
+      </ul>
+
+      <div class="mt-6 flex justify-end">
+        <button id="downloadPdf" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            Download PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    document.getElementById('downloadPdf').addEventListener('click', function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.setFontSize(22);
+        doc.text('Liver Disease Prediction Results', 14, 22);
+        
+        // Add user details
+        doc.setFontSize(16);
+        doc.text('Name: {{ input_data.name|escapejs }}', 14, 40);
+        doc.text('Age: {{ input_data.age }}', 14, 50);
+        doc.text('Gender: {{ input_data.gender|yesno:"Male,Female"|escapejs }}', 14, 60);
+        doc.text('BMI: {{ input_data.bmi }}', 14, 70);
+        doc.text('Alcohol Consumption (units/week): {{ input_data.alcohol }}', 14, 80);
+        doc.text('Smoking: {{ input_data.smoking|yesno:"Yes,No"|escapejs }}', 14, 90);
+        doc.text('Genetic Risk: {{ input_data.geneticRisk|yesno:"High,Low"|escapejs }}', 14, 100);
+        doc.text('Physical Activity (hours/week): {{ input_data.physical_activity }}', 14, 110);
+        doc.text('Diabetes: {{ input_data.diabetes|yesno:"Yes,No"|escapejs }}', 14, 120);
+        doc.text('Hypertension: {{ input_data.hypertension|yesno:"Yes,No"|escapejs }}', 14, 130);
+        doc.text('Liver Function Test (score): {{ input_data.liver_function_test }}', 14, 140);
+        doc.text('Liver Disease: ' + ('{{ prediction_result }}' > 0 ? 'Positive' : 'Negative'), 14, 150);
+        
+        // Save the PDF
+        doc.save('liver_disease_prediction_results.pdf');
+    });
+</script>
+
+{% endblock body %}

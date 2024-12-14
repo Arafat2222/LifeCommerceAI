@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% block title %} Prediction {% endblock %}
+
+{% block body %}
+
+<section class="text-gray-600 body-font -my-9">
+  <div class="container px-5 py-24 mx-auto">
+    <!-- Section Heading -->
+    <div class="flex flex-col text-center w-full mb-12">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Liver Disease Prediction</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Explore the future of your insurance premiums with just a few simple details.</p>
+      <br><b>
+        <!-- {% if output_data > 0 %}
+          <h2>Heart Disease: <span class="text-red-500 font-bold">Positive</span></h2>
+        {% else %}
+          <h2>Heart Disease: <span class="text-green-500 font-bold">Negative</span></h2>
+        {% endif %} -->
+      </b>
+    </div>
+    <h2></h2>
+
+
+
+<form action="#" method="POST" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg"onsubmit="return validateForm()">
+    {% csrf_token %}
+    
+    <!-- Name -->
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700">Name</label>
+      <input type="text" id="name" name="name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+
+    <!-- Age -->
+    <div class="mb-4">
+        <label for="age" class="block text-gray-700">Age</label>
+        <input type="number" id="age" name="age" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+  
+  <!-- Gender -->
+  <div class="mb-4">
+    <label for="gender" class="block text-gray-700">Gender</label>
+    <select id="gender" name="gender" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <option value="">Select</option>
+      <option value="0">Female</option>
+      <option value="1">Male</option>
+    </select>
+  </div>
+  
+  <!-- BMI -->
+  <div class="mb-4">
+    <label for="bmi" class="block text-gray-700">BMI</label>
+    <input type="number" step="0.1" id="bmi" name="bmi" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+  </div>
+  
+  <!-- Alcohol Consumption -->
+  <div class="mb-4">
+    <label for="alcohol" class="block text-gray-700">Alcohol Consumption (units/week)</label>
+    <input type="number" step="0.1" id="alcohol" name="alcohol" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+  </div>
+  
+  <!-- Smoking -->
+  <div class="mb-4">
+    <label for="smoking" class="block text-gray-700">Smoking</label>
+    <select id="smoking" name="smoking" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <option value="">Select</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+  </div>
+  
+  <!-- Genetic Risk -->
+  <div class="mb-4">
+    <label for="geneticRisk" class="block text-gray-700">Genetic Risk</label>
+    <select id="geneticRisk" name="geneticRisk" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <option value="">Select</option>
+      <option value="0">Low</option>
+      <option value="1">High</option>
+    </select>
+  </div>
+  
+  <!-- Physical Activity -->
+  <div class="mb-4">
+    <label for="physicalActivity" class="block text-gray-700">Physical Activity (hours/week)</label>
+    <input type="number" step="0.1" id="physicalActivity" name="physicalActivity" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+  </div>
+  
+  <!-- Diabetes -->
+  <div class="mb-4">
+    <label for="diabetes" class="block text-gray-700">Diabetes</label>
+    <select id="diabetes" name="diabetes" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <option value="">Select</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+  </div>
+  
+  <!-- Hypertension -->
+  <div class="mb-4">
+    <label for="hypertension" class="block text-gray-700">Hypertension</label>
+    <select id="hypertension" name="hypertension" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <option value="">Select</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+  </div>
+  
+  <!-- Liver Function Test -->
+  <div class="mb-4">
+    <label for="liverFunctionTest" class="block text-gray-700">Liver Function Test (score)</label>
+    <input type="number" step="0.1" id="liverFunctionTest" name="liverFunctionTest" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+  </div>
+  
+  <!-- Submit and Reset Buttons -->
+      <div class="flex justify-between">
+        <button type="button" onclick="clearForm()" class="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
+          Reset
+        </button>
+        <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          Submit
+        </button>
+      </div>
+
+      <script>
+        function clearForm() {
+          // Clear all input fields
+          // Clear all input fields
+          document.getElementById('age').value = '';
+          document.getElementById('gender').value = '';
+          document.getElementById('bmi').value = '';
+          document.getElementById('alcohol').value = '';
+          document.getElementById('smoking').value = '';
+          document.getElementById('geneticRisk').value = '';
+          document.getElementById('physicalActivity').value = '';
+          document.getElementById('diabetes').value = '';
+          document.getElementById('hypertension').value = '';
+          document.getElementById('liverFunctionTest').value = '';
+          // Clear prediction result
+          document.getElementById('predictionResult').style.display = 'none'; // Hide prediction result
+          
+          // Clear any error borders or custom validation styles
+          const fields = document.querySelectorAll('input, select');
+          fields.forEach(field => {
+            field.classList.remove('border-red-500');
+          });
+        }
+      </script>
+      
+      <script>
+        
+  function validateForm() {
+    let allValid = true;
+
+    // Clear previous error indications
+    const fields = document.querySelectorAll('input, select');
+    fields.forEach(field => {
+      field.classList.remove('border-red-500');
+    });
+
+    // Age validation
+    const age = document.getElementById('age').value;
+    if (age === "" || age <= 0) {
+      alert('Age must be a positive number.');
+      document.getElementById('age').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // Gender validation
+    const gender = document.getElementById('gender').value;
+    if (gender === "") {
+      alert('Gender must be selected.');
+      document.getElementById('gender').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // BMI validation
+    const bmi = document.getElementById('bmi').value;
+    if (bmi === "" || bmi <= 0) {
+      alert('BMI must be a positive number.');
+      document.getElementById('bmi').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // Alcohol Consumption validation
+    const alcohol = document.getElementById('alcohol').value;
+    if (alcohol === "" || alcohol < 0) {
+      alert('Alcohol Consumption must be a non-negative number.');
+      document.getElementById('alcohol').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // Smoking validation
+    const smoking = document.getElementById('smoking').value;
+    if (smoking === "") {
+      alert('Smoking must be selected.');
+      document.getElementById('smoking').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // Genetic Risk validation
+    const geneticRisk = document.getElementById('geneticRisk').value;
+    if (geneticRisk === "") {
+      alert('Genetic Risk must be selected.');
+      document.getElementById('geneticRisk').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // Physical Activity validation
+    const physicalActivity = document.getElementById('physicalActivity').value;
+    if (physicalActivity === "" || physicalActivity < 0) {
+      alert('Physical Activity must be a non-negative number.');
+      document.getElementById('physicalActivity').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // Diabetes validation
+    const diabetes = document.getElementById('diabetes').value;
+    if (diabetes === "") {
+      alert('Diabetes must be selected.');
+      document.getElementById('diabetes').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // Hypertension validation
+    const hypertension = document.getElementById('hypertension').value;
+    if (hypertension === "") {
+      alert('Hypertension must be selected.');
+      document.getElementById('hypertension').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    // Liver Function Test validation
+    const liverFunctionTest = document.getElementById('liverFunctionTest').value;
+    if (liverFunctionTest === "" || liverFunctionTest < 0) {
+      alert('Liver Function Test must be a non-negative number.');
+      document.getElementById('liverFunctionTest').classList.add('border-red-500');
+      allValid = false;
+    }
+
+    return allValid; // Prevent form submission if validation fails
+  }
+      </script>
+
+    </form>
+    </div>
+    </section>
+
+  
+
+  {% endblock body %}  
